@@ -84,11 +84,11 @@ const drawWatermark = (media: any, config: any, err: any) => {
     const lines = text.split('\n'); // 按换行符分割文本为多行
     const lineHeight = fontSize * 1.2; // 行高，可根据需要调整
 
-    for (let i = 0; i < lines.length; i++) {
-        const line = lines[i];
-        const currentY = y + i * lineHeight; // 计算当前行的y坐标
-        media.canvasCtx.fillText(line, x, currentY);
-    }
+    // 逐行绘制文本
+    lines.forEach((line, index) => {
+      const currentY = y + index * lineHeight; // 每行递增Y坐标
+      media.canvasCtx.fillText(line, x, currentY);
+    });
 
     media.canvasCtx.restore();
   }
