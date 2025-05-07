@@ -77,7 +77,19 @@ const drawWatermark = (media: any, config: any, err: any) => {
     media.canvasCtx.scale(1 / dpr, 1 / dpr); // 缩放回逻辑像素
     media.canvasCtx.fillStyle = config.watermark.text.color || "#FFFFFF";
     media.canvasCtx.font = `${fontSize}px sans-serif`;
-    media.canvasCtx.fillText(config.watermark.text.text, x, y);
+    // media.canvasCtx.fillText(config.watermark.text.text, x, y);
+
+    // 处理多行文本
+    const text = config.watermark.text.text;
+    const lines = text.split('\n'); // 按换行符分割文本为多行
+    const lineHeight = fontSize * 1.2; // 行高，可根据需要调整
+
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+        const currentY = y + i * lineHeight; // 计算当前行的y坐标
+        media.canvasCtx.fillText(line, x, currentY);
+    }
+
     media.canvasCtx.restore();
   }
   if (config.watermark.image) {
